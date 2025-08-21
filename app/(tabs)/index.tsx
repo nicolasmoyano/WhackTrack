@@ -477,15 +477,6 @@ export default function HomeScreen() {
                   <ButtonText>{">"}</ButtonText>
                 </Button>
               </View>
-              <View
-                className="justify-end w-full"
-                style={{
-                  width: 1,
-                  height: "100%",
-                  backgroundColor: "#e5e7eb",
-                  marginHorizontal: 12,
-                }}
-              />
             </View>
 
             {/* HOLE SELECTORS */}
