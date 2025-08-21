@@ -327,19 +327,19 @@ export default function HomeScreen() {
           style={{
             position: "absolute",
             top: 64,
-            left: 24,
+            left: 16,
             zIndex: 10,
             padding: 8,
             borderRadius: 16,
             flexDirection: "column",
             alignItems: "center",
-            backgroundColor: "rgba(82, 168, 255, 0.5)",
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
           }}
         >
           {/* Settings button (now at the top) */}
           <TouchableOpacity
+            className="bg-gray-400"
             style={{
-              backgroundColor: "rgb(255, 255, 255)",
               borderRadius: 24,
               padding: 10,
               marginBottom: 16,
@@ -347,13 +347,13 @@ export default function HomeScreen() {
             }}
             onPress={() => setSettingsVisible(true)}
           >
-            <Ionicons name="settings-outline" size={16} color="#2563eb" />
+            <Ionicons name="settings-outline" size={16} color="#FFF" />
           </TouchableOpacity>
 
           {/* Center to my location button */}
           <TouchableOpacity
+            className="bg-blue-400"
             style={{
-              backgroundColor: "rgba(255,255,255,0.7)",
               borderRadius: 24,
               padding: 10,
               marginBottom: 16,
@@ -373,17 +373,13 @@ export default function HomeScreen() {
               }
             }}
           >
-            <MaterialCommunityIcons
-              name="crosshairs-gps"
-              size={16}
-              color="#2563eb"
-            />
+            <MaterialCommunityIcons name="crosshairs" size={16} color="#FFF" />
           </TouchableOpacity>
 
           {/* Set Start Point button */}
           <TouchableOpacity
+            className="bg-lime-600"
             style={{
-              backgroundColor: "rgba(37,99,235,0.8)",
               borderRadius: 24,
               padding: 10,
               marginBottom: 16,
@@ -420,51 +416,52 @@ export default function HomeScreen() {
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "space-between",
                 alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: 8,
+                width: "100%",
               }}
             >
-              {/* Hole navigation */}
-              <HStack
+              {/* Previous Button */}
+              <Button
+                className="bg-white rounded-full shadow-black shadow-sm"
+                variant="solid"
+                onPress={() => setCurrentHole((h) => Math.max(1, h - 1))}
                 style={{
-                  alignItems: "center",
                   justifyContent: "center",
-                  marginBottom: 8,
+                  alignItems: "center",
                 }}
               >
-                <Button
-                  className="bg-white rounded-full shadow-black shadow-sm"
-                  variant="solid"
-                  onPress={() => setCurrentHole((h) => Math.max(1, h - 1))}
-                  style={{ marginRight: 8 }}
+                <Ionicons name="chevron-back" size={24} color="#2563eb" />
+              </Button>
+
+              {/* Hole count and swings */}
+              <View style={{ alignItems: "center", flex: 1 }}>
+                <Text style={{ fontSize: 18 }}>
+                  {currentHole} / {holeCount}
+                </Text>
+                <Text
+                  style={{ fontSize: 16, color: "#2563eb", fontWeight: "bold" }}
                 >
-                  <ButtonText>{"<"}</ButtonText>
-                </Button>
-                <View style={{ alignItems: "center", minWidth: 80 }}>
-                  <Text style={{ fontSize: 18 }}>
-                    {currentHole} / {holeCount}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: "#2563eb",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Swings: {swingCounts[currentHole - 1] || 0}
-                  </Text>
-                </View>
-                <Button
-                  className="bg-white rounded-full shadow-black shadow-sm"
-                  variant="solid"
-                  onPress={() =>
-                    setCurrentHole((h) => Math.min(holeCount, h + 1))
-                  }
-                  style={{ marginLeft: 8 }}
-                >
-                  <ButtonText>{">"}</ButtonText>
-                </Button>
-              </HStack>
+                  Swings: {swingCounts[currentHole - 1] || 0}
+                </Text>
+              </View>
+
+              {/* Next Button */}
+              <Button
+                className="bg-white rounded-full shadow-black shadow-sm"
+                variant="solid"
+                onPress={() =>
+                  setCurrentHole((h) => Math.min(holeCount, h + 1))
+                }
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  overflow: "visible",
+                }}
+              >
+                <Ionicons name="chevron-forward" size={24} color="#2563eb" />
+              </Button>
             </View>
 
             {/* HOLE SELECTORS */}
@@ -577,14 +574,14 @@ export default function HomeScreen() {
             <Box className="mt-4">
               <HStack className="space-between mt-2" space="md">
                 <Button
-                  className="bg-white rounded-full shadow-black shadow-sm"
+                  className="rounded-full bg-lime-600/50"
                   variant="solid"
                   onPress={handleSwing}
                 >
-                  <ButtonText>Add Swing</ButtonText>
+                  <ButtonText className="text-white">Add Swing</ButtonText>
                 </Button>
                 <Button
-                  className="bg-white rounded-full shadow-black shadow-sm"
+                  className="bg-transparent rounded-full"
                   variant="solid"
                   onPress={handleResetSwing}
                 >
