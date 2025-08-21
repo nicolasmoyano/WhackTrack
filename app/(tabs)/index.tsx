@@ -431,18 +431,19 @@ export default function HomeScreen() {
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
-                    marginLeft: 16,
                   }}
                 >
                   <Button
-                    variant="outline"
+                    className="bg-white rounded-full shadow-black shadow-sm"
+                    variant="solid"
                     onPress={() => setCurrentHole((h) => Math.max(1, h - 1))}
                     style={{ marginRight: 8 }}
                   >
                     <ButtonText>{"<"}</ButtonText>
                   </Button>
                   <Button
-                    variant="outline"
+                    className="bg-white rounded-full shadow-black shadow-sm"
+                    variant="solid"
                     onPress={() =>
                       setCurrentHole((h) => Math.min(holeCount, h + 1))
                     }
