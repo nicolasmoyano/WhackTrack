@@ -432,9 +432,6 @@ export default function HomeScreen() {
                 variant="solid"
                 onPress={() => setCurrentHole((h) => Math.max(1, h - 1))}
                 style={{
-                  marginRight: 8,
-                  width: 56,
-                  height: 56,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -462,11 +459,9 @@ export default function HomeScreen() {
                   setCurrentHole((h) => Math.min(holeCount, h + 1))
                 }
                 style={{
-                  marginLeft: 8,
-                  width: 56,
-                  height: 56,
                   justifyContent: "center",
                   alignItems: "center",
+                  overflow: "visible",
                 }}
               >
                 <Ionicons name="chevron-forward" size={24} color="#2563eb" />
