@@ -425,62 +425,67 @@ export default function HomeScreen() {
                 // marginBottom: 8,
               }}
             >
-              <HStack>
-                {/* Hole navigation */}
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginLeft: 16,
-                  }}
+              {/* Hole navigation */}
+              <View
+                style={{
+                  justifyContent: "space-between",
+                  width: "100%",
+                  paddingRight: 16,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginLeft: 16,
+                }}
+              >
+                <Button
+                  className="bg-white rounded-full shadow-black shadow-sm"
+                  variant="solid"
+                  onPress={() => setCurrentHole((h) => Math.max(1, h - 1))}
+                  style={{ marginRight: 8 }}
                 >
-                  <Button
-                    variant="outline"
-                    onPress={() => setCurrentHole((h) => Math.max(1, h - 1))}
-                    style={{ marginRight: 8 }}
-                  >
-                    <ButtonText>{"<"}</ButtonText>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onPress={() =>
-                      setCurrentHole((h) => Math.min(holeCount, h + 1))
-                    }
-                    style={{ marginLeft: 8 }}
-                  >
-                    <ButtonText>{">"}</ButtonText>
-                  </Button>
-                </View>
-                <View
-                  className="justify-end w-full"
-                  style={{
-                    width: 1,
-                    height: "100%",
-                    backgroundColor: "#e5e7eb",
-                    marginHorizontal: 12,
-                  }}
-                />
-                <Box className="justify-center items-center">
-                  <Text style={{ fontSize: 18 }}>
-                    {currentHole} / {holeCount}
-                  </Text>
-                </Box>
-                <Box
-                  className="pl-4 justify-center items-center"
-                  style={{
-                    marginLeft: 16,
-                    borderLeftWidth: 1,
-                    borderLeftColor: "#ababab",
-                  }}
-                >
-                  <Heading className="text-xl font-normal">
-                    <Text className="pr-4">Swings:</Text>
-                    <Text className="text-blue-600 font-bold pl-4">
-                      {swingCounts[currentHole - 1] || 0}
+                  <ButtonText>{"<"}</ButtonText>
+                </Button>
+                <View>
+                  <Box className="justify-center items-center">
+                    <Text style={{ fontSize: 18 }}>
+                      {currentHole} / {holeCount}
                     </Text>
-                  </Heading>
-                </Box>
-              </HStack>
+                  </Box>
+                  <Box
+                    className="pl-4 justify-center items-center"
+                    style={{
+                      marginLeft: 16,
+                      borderLeftWidth: 1,
+                      borderLeftColor: "#ababab",
+                    }}
+                  >
+                    <Heading className="text-xl font-normal">
+                      <Text className="pr-4">Swings:</Text>
+                      <Text className="text-blue-600 font-bold pl-4">
+                        {swingCounts[currentHole - 1] || 0}
+                      </Text>
+                    </Heading>
+                  </Box>
+                </View>
+                <Button
+                  className="bg-white rounded-full shadow-black shadow-sm"
+                  variant="solid"
+                  onPress={() =>
+                    setCurrentHole((h) => Math.min(holeCount, h + 1))
+                  }
+                  style={{ marginLeft: 8 }}
+                >
+                  <ButtonText>{">"}</ButtonText>
+                </Button>
+              </View>
+              <View
+                className="justify-end w-full"
+                style={{
+                  width: 1,
+                  height: "100%",
+                  backgroundColor: "#e5e7eb",
+                  marginHorizontal: 12,
+                }}
+              />
             </View>
 
             {/* HOLE SELECTORS */}
