@@ -333,7 +333,7 @@ export default function HomeScreen() {
             borderRadius: 16,
             flexDirection: "column",
             alignItems: "center",
-            backgroundColor: "rgba(82, 168, 255, 0.5)",
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
           }}
         >
           {/* Settings button (now at the top) */}
