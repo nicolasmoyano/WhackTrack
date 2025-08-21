@@ -420,52 +420,57 @@ export default function HomeScreen() {
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "space-between",
                 alignItems: "center",
-                // marginBottom: 8,
+                justifyContent: "space-between",
+                marginBottom: 8,
+                width: "100%",
               }}
             >
-              {/* Hole navigation */}
-              <HStack
+              {/* Previous Button */}
+              <Button
+                className="bg-white rounded-full shadow-black shadow-sm"
+                variant="solid"
+                onPress={() => setCurrentHole((h) => Math.max(1, h - 1))}
                 style={{
-                  alignItems: "center",
+                  marginRight: 8,
+                  width: 56,
+                  height: 56,
                   justifyContent: "center",
-                  marginBottom: 8,
+                  alignItems: "center",
                 }}
               >
-                <Button
-                  className="bg-white rounded-full shadow-black shadow-sm"
-                  variant="solid"
-                  onPress={() => setCurrentHole((h) => Math.max(1, h - 1))}
-                  style={{ marginRight: 8 }}
+                <Ionicons name="chevron-back" size={24} color="#2563eb" />
+              </Button>
+
+              {/* Hole count and swings */}
+              <View style={{ alignItems: "center", flex: 1 }}>
+                <Text style={{ fontSize: 18 }}>
+                  {currentHole} / {holeCount}
+                </Text>
+                <Text
+                  style={{ fontSize: 16, color: "#2563eb", fontWeight: "bold" }}
                 >
-                  <ButtonText>{"<"}</ButtonText>
-                </Button>
-                <View style={{ alignItems: "center", minWidth: 80 }}>
-                  <Text style={{ fontSize: 18 }}>
-                    {currentHole} / {holeCount}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: "#2563eb",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Swings: {swingCounts[currentHole - 1] || 0}
-                  </Text>
-                </View>
-                <Button
-                  className="bg-white rounded-full shadow-black shadow-sm"
-                  variant="solid"
-                  onPress={() =>
-                    setCurrentHole((h) => Math.min(holeCount, h + 1))
-                  }
-                  style={{ marginLeft: 8 }}
-                >
-                  <ButtonText>{">"}</ButtonText>
-                </Button>
-              </HStack>
+                  Swings: {swingCounts[currentHole - 1] || 0}
+                </Text>
+              </View>
+
+              {/* Next Button */}
+              <Button
+                className="bg-white rounded-full shadow-black shadow-sm"
+                variant="solid"
+                onPress={() =>
+                  setCurrentHole((h) => Math.min(holeCount, h + 1))
+                }
+                style={{
+                  marginLeft: 8,
+                  width: 56,
+                  height: 56,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Ionicons name="chevron-forward" size={24} color="#2563eb" />
+              </Button>
             </View>
 
             {/* HOLE SELECTORS */}
