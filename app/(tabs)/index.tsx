@@ -426,14 +426,11 @@ export default function HomeScreen() {
               }}
             >
               {/* Hole navigation */}
-              <View
+              <HStack
                 style={{
-                  justifyContent: "space-between",
-                  width: "100%",
-                  paddingRight: 16,
-                  flexDirection: "row",
                   alignItems: "center",
-                  marginLeft: 16,
+                  justifyContent: "center",
+                  marginBottom: 8,
                 }}
               >
                 <Button
@@ -444,27 +441,19 @@ export default function HomeScreen() {
                 >
                   <ButtonText>{"<"}</ButtonText>
                 </Button>
-                <View>
-                  <Box className="justify-center items-center">
-                    <Text style={{ fontSize: 18 }}>
-                      {currentHole} / {holeCount}
-                    </Text>
-                  </Box>
-                  <Box
-                    className="pl-4 justify-center items-center"
+                <View style={{ alignItems: "center", minWidth: 80 }}>
+                  <Text style={{ fontSize: 18 }}>
+                    {currentHole} / {holeCount}
+                  </Text>
+                  <Text
                     style={{
-                      marginLeft: 16,
-                      borderLeftWidth: 1,
-                      borderLeftColor: "#ababab",
+                      fontSize: 14,
+                      color: "#2563eb",
+                      fontWeight: "bold",
                     }}
                   >
-                    <Heading className="text-xl font-normal">
-                      <Text className="pr-4">Swings:</Text>
-                      <Text className="text-blue-600 font-bold pl-4">
-                        {swingCounts[currentHole - 1] || 0}
-                      </Text>
-                    </Heading>
-                  </Box>
+                    Swings: {swingCounts[currentHole - 1] || 0}
+                  </Text>
                 </View>
                 <Button
                   className="bg-white rounded-full shadow-black shadow-sm"
@@ -476,7 +465,7 @@ export default function HomeScreen() {
                 >
                   <ButtonText>{">"}</ButtonText>
                 </Button>
-              </View>
+              </HStack>
             </View>
 
             {/* HOLE SELECTORS */}
