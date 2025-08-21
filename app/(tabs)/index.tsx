@@ -269,7 +269,7 @@ export default function HomeScreen() {
             <Marker
               coordinate={startPoint}
               pinColor="green"
-              title="Start point"
+              title="Start Point"
             />
           )}
           {endPoint && (
@@ -422,7 +422,6 @@ export default function HomeScreen() {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                // marginBottom: 8,
               }}
             >
               {/* Hole navigation */}
