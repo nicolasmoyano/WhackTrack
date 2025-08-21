@@ -424,6 +424,7 @@ export default function HomeScreen() {
                 alignItems: "center",
               }}
             >
+              {/* Hole navigation */}
               <HStack
                 style={{
                   alignItems: "center",
