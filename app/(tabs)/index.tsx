@@ -269,7 +269,7 @@ export default function HomeScreen() {
             <Marker
               coordinate={startPoint}
               pinColor="green"
-              title="Start point"
+              title="Start Point"
             />
           )}
           {endPoint && (
