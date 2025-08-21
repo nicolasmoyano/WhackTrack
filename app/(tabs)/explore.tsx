@@ -1,110 +1,156 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { useRouter } from "expo-router";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useCourse } from "../../context/CourseContext";
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+type OverpassElement = {
+  id: number;
+  type: "way" | "relation";
+  tags?: { name?: string };
+  center?: { lat: number; lon: number };
+};
 
-export default function TabTwoScreen() {
+export default function GolfCoursesScreen() {
+  const router = useRouter();
+  const { setSelectedCourse, setCourses, courses } = useCourse();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
+
+  // Filter courses client-side by name
+  const filteredCourses = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return courses;
+    return courses.filter((c) => c.name.toLowerCase().includes(q));
+  }, [courses, query]);
+
+  const fetchCourses = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      // Stockholm bounding box (south, west, north, east)
+      const bbox = "59.1,17.6,59.6,18.3";
+      const query = `
+        [out:json][timeout:25];
+        (
+          way["leisure"="golf_course"](${bbox});
+          relation["leisure"="golf_course"](${bbox});
+        );
+        out center tags;
+      `;
+      const res = await fetch("https://overpass-api.de/api/interpreter", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "data=" + encodeURIComponent(query),
+      });
+      if (!res.ok) throw new Error(`Overpass error: ${res.status}`);
+      const data = await res.json();
+      const items = (data.elements as OverpassElement[])
+        .filter((el) => el.center && (el.tags?.name ?? "").length > 0)
+        .map((el) => ({
+          id: String(el.id),
+          name: el.tags!.name!,
+          latitude: el.center!.lat,
+          longitude: el.center!.lon,
+        }));
+      setCourses(items);
+    } catch (e: any) {
+      setError(e.message || "Failed to load courses");
+    } finally {
+      setLoading(false);
+    }
+  }, [setCourses]);
+
+  useEffect(() => {
+    // Load once when screen mounts
+    fetchCourses();
+  }, [fetchCourses]);
+
+  const handleSelectCourse = (course: any) => {
+    setSelectedCourse(course);
+    router.replace("/(tabs)"); // Go back to Home tab
+  };
+
+  const statusBarHeight =
+    Platform.OS === "ios" ? 44 : StatusBar.currentHeight || 0;
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <View style={[styles.container, { paddingTop: statusBarHeight }]}>
+      <Text style={styles.title}>Golf Courses</Text>
+
+      {/* Search input */}
+      <TextInput
+        placeholder="Search courses"
+        value={query}
+        onChangeText={setQuery}
+        autoCorrect={false}
+        autoCapitalize="none"
+        style={styles.search}
+      />
+
+      {loading && (
+        <ActivityIndicator size="large" style={{ marginVertical: 16 }} />
+      )}
+      {error && <Text style={{ color: "red", marginBottom: 12 }}>{error}</Text>}
+
+      <FlatList
+        data={filteredCourses}
+        keyExtractor={(item) => item.id}
+        onRefresh={fetchCourses}
+        refreshing={loading}
+        keyboardShouldPersistTaps="handled"
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => handleSelectCourse(item)}
+          >
+            <Text style={styles.itemText}>{item.name}</Text>
+            <Text style={styles.subText}>
+              {item.latitude.toFixed(5)}, {item.longitude.toFixed(5)}
+            </Text>
+          </TouchableOpacity>
+        )}
+        ListEmptyComponent={
+          !loading ? (
+            <Text>
+              {query
+                ? "No courses match your search."
+                : "No courses found. Pull to refresh."}
+            </Text>
+          ) : null
+        }
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  container: { flex: 1, padding: 24, backgroundColor: "#fff" },
+  title: { fontSize: 24, fontWeight: "bold", marginBottom: 12 },
+  search: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    marginBottom: 12,
+    backgroundColor: "#fafafa",
   },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
+  item: {
+    paddingVertical: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
   },
+  itemText: { fontSize: 18, fontWeight: "600" },
+  subText: { fontSize: 12, color: "#555", marginTop: 4 },
 });

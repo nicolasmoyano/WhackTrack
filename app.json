@@ -37,6 +37,19 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "f6f56706-9562-40ba-8c30-797a8b78aa9c"
+      }
+    },
+    "owner": "nicmoy",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/f6f56706-9562-40ba-8c30-797a8b78aa9c"
     }
   }
 }
