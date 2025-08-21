@@ -442,7 +442,8 @@ export default function HomeScreen() {
                     <ButtonText>{"<"}</ButtonText>
                   </Button>
                   <Button
-                    variant="outline"
+                    className="rounded"
+                    variant="solid"
                     onPress={() =>
                       setCurrentHole((h) => Math.min(holeCount, h + 1))
                     }
