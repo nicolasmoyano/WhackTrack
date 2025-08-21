@@ -422,7 +422,6 @@ export default function HomeScreen() {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                // marginBottom: 8,
               }}
             >
               <HStack>
