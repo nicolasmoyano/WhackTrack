@@ -1,50 +1,81 @@
-# Welcome to your Expo app 👋
+# Golf Shot Tracker App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A mobile app for tracking golf shots, swing counts, and club distances per hole on a map. Designed for golfers who want to analyze their performance and keep a round-by-round record.
 
-## Get started
+## Features
 
-1. Install dependencies
+- 📍 **Map-based shot tracking:** Set start and end points for each shot on a satellite map.
+- 🏌️ **Per-hole shot history:** Record and view shots for each hole (supports 9 or 18 holes).
+- ⛳ **Swing counter:** Track swings per hole, automatically resets when you change holes.
+- 🏆 **Club selection:** Choose your club for each shot and see distance per club.
+- 🔄 **Easy controls:** Floating control panel for centering map, setting start, resetting points, and accessing settings.
+- ⚙️ **Settings:** Switch between 9 and 18 hole rounds.
+- 🎯 **Visual feedback:** End point marker with distance tooltip and highlight circle.
+- 📱 **Mobile-friendly UI:** Clean, touch-optimized design for use on the course.
 
-   ```bash
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/)
+- [Expo CLI](https://docs.expo.dev/get-started/installation/)
+- [Yarn](https://yarnpkg.com/) or [npm](https://www.npmjs.com/)
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```sh
+   git clone https://github.com/nicolasmoyano/WhackTrack
+   cd WhackTrack
+   ```
+
+2. **Install dependencies:**
+
+   ```sh
+   yarn install
+   # or
    npm install
    ```
 
-2. Start the app
+3. **Start the app:**
 
-   ```bash
-   npx expo start
+   ```sh
+   expo start
    ```
 
-In the output, you'll find options to open the app in a
+4. **Run on your device:**
+   - Use the Expo Go app on your phone, or
+   - Run on an emulator/simulator.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Usage
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- Tap the **flag** to set your start point (your location or a map point).
+- Tap the map to set your end point.
+- Select your club and tap **Add swing** to record a shot.
+- Use the arrows to navigate between holes.
+- View your shot history and swing count per hole.
+- Access settings (gear icon) to switch between 9 and 18 holes.
 
-## Get a fresh project
+## Screenshots
 
-When you're ready, run:
+_Add screenshots here if available._
 
-```bash
-npm run reset-project
-```
+## Tech Stack
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
+- [react-native-maps](https://github.com/react-native-maps/react-native-maps)
+- [@expo/vector-icons](https://docs.expo.dev/guides/icons/)
 
-## Learn more
+## Contributing
 
-To learn more about developing your project with Expo, look at the following resources:
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## License
 
-## Join the community
+[MIT](LICENSE)
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Enjoy your golf rounds and track your progress!**
